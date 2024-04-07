@@ -6,15 +6,16 @@ export default function Layout({
   children: React.ReactNode;
 }): JSX.Element {
   return (
-    <div className="flex">
-      <div className="w-72 border-r border-slate-300 min-h-screen mr-4 pt-28">
-        <div>
+    <div className="flex flex-col md:flex-row">
+      <div className="pt-4 md:w-80 md:border-r md:border-slate-300 md:min-h-screen md:mr-4 md:pt-28">
+        <div className="flex flx-row md:flex-col widthVx overflow-x-scroll md:overflow-x-hidden md:px-4">
           <SidebarItem href={"/dashboard"} icon={<HomeIcon />} title="Home" />
           <SidebarItem href={"/wallet"} icon={<TransferIcon />} title="Wallet" />
-          <SidebarItem href={"/history"} icon={<TransactionsIcon />} title="History" />
           <SidebarItem href={"/transfer"} icon={<P2PTransferIcon />} title="Transfer" />
+          <SidebarItem href={"/history"} icon={<TransactionsIcon />} title="History" />
         </div>
       </div>
+
       {children}
     </div>
   );

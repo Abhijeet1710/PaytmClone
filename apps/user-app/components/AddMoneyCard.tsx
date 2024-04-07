@@ -17,7 +17,7 @@ const SUPPORTED_BANKS = [{
 
 export async function creditMoneyIntoWallet(provider: string, amount: number, redirectUrl: string | undefined) {
     if (amount < 1000) {
-        alert("Amount to credit into the wallet should be minimum 1000 Rs.")
+        alert("Amount to credit into the wallet should be minimum 1000 INR.")
         return
     }
 
@@ -35,8 +35,8 @@ export const AddMoney = () => {
     const [redirectUrl, setRedirectUrl] = useState(SUPPORTED_BANKS[0]?.redirectUrl);
     const [provider, setProvider] = useState(SUPPORTED_BANKS[0]?.name || "");
     const [value, setValue] = useState(0)
-    return <Card title="Add Money">
-        <div className="w-full">
+    return <Card title="Add Money to the Wallet">
+        <div className="w-full mt-2">
             <TextInput inputType="number" label={"Amount"} placeholder={"Amount"} onChange={(val) => {
                 setValue(Number(val))
             }} />

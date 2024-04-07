@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.widthVx {
+    width: 100VX;
+}
+
+.selectedNav {
+    color: white;
+    background-color: blue;
+    border-radius: 20px;
+}

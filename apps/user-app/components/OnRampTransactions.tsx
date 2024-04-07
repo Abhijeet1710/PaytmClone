@@ -47,7 +47,7 @@ export const OnRampTransactions = ({
                     </div>
                 </div>
                 <div className="flex justify-center">
-                    <span className="mr-2">+ Rs {t.amount}</span>
+                    <span className="mr-2">+ INR {t.amount}</span>
                     <span className={getClassNameByTransactionStatus(t.status)}>{<AmtCreditedIcon/>}</span>
                 </div>
 
