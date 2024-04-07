@@ -1,6 +1,8 @@
 import express from "express";
 import prismaDB from "@repo/db/client";
-import {TransactionStatuses} from "@repo/db/client";
+import { TransactionStatuses } from "@repo/db/client";
+import * as _ from "lodash"
+
 const app = express();
 
 app.use(express.json())
@@ -13,14 +15,34 @@ app.post("/hdfcWebhook", async (req, res) => {
     const paymentInformation: {
         token: string;
         userId: string;
-        amount: string
+        amount: string;
+        error: string[]
     } = {
         token: req.body.token,
         userId: req.body.user_identifier,
-        amount: req.body.amount
+        amount: req.body.amount,
+        error: req.body.error
     };
-
     try {
+        if (!_.isNil(paymentInformation.error)) {
+
+            const respOnRampUpdate = await prismaDB.onRampTransaction.updateMany({
+                where: {
+                    token: paymentInformation.token
+                },
+                data: {
+                    status: TransactionStatuses.FAILED,
+                }
+            })
+
+            res.status(200).json({
+                statusCode: 200,
+                message: `Captured As ${TransactionStatuses.FAILED}`
+            })
+            return
+        }
+
+
         await prismaDB.$transaction(async (tx) => {
             const respBalUpdate = await tx.balance.updateMany({
                 where: {
@@ -35,11 +57,11 @@ app.post("/hdfcWebhook", async (req, res) => {
             });
 
             console.log("Balance Update : " + JSON.stringify(respBalUpdate))
-            
+
             const respOnRampUpdate = await tx.onRampTransaction.updateMany({
                 where: {
                     token: paymentInformation.token
-                }, 
+                },
                 data: {
                     status: TransactionStatuses.SUCCESSFUL,
                 }
@@ -48,15 +70,18 @@ app.post("/hdfcWebhook", async (req, res) => {
             console.log("respOnRampUpdate Update : " + JSON.stringify(respOnRampUpdate))
         })
 
-        res.json({
-            message: "Captured"
+        res.status(200).json({
+            statusCode: 200,
+            message: `Captured as ${TransactionStatuses.SUCCESSFUL}`
         })
-    } catch(e) {
+    } catch (e) {
         console.error(e);
         res.status(411).json({
-            message: "Error while processing webhook"
+            statusCode: 411,
+            message: `Captured as ${TransactionStatuses.PENDING}`,
+            error: "Error while processing webhook"
         })
     }
 })
 
-app.listen(PORT, () => console.log("Server Up and Running on https://localhost:"+PORT));
+app.listen(PORT, () => console.log("Server Up and Running on https://localhost:" + PORT));
