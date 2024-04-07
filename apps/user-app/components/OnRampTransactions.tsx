@@ -17,13 +17,7 @@ const getClassNameByTransactionStatus = (status: string) => {
 export const OnRampTransactions = ({
     transactions
 }: {
-    transactions: {
-        time: Date,
-        amount: number,
-        // TODO: Can the type of `status` be more specific?
-        status: string,
-        provider: string
-    }[]
+    transactions: any[]
 }) => {
     if (!transactions.length) {
         return <Card title="Recent Transactions">
@@ -33,7 +27,7 @@ export const OnRampTransactions = ({
         </Card>
     }
 
-    console.log("All Trans"+ JSON.stringify(transactions));
+    // console.log("All Trans"+ JSON.stringify(transactions));
     
     return <Card title="Recent Wallet Transactions">
         <div className="pt-2">

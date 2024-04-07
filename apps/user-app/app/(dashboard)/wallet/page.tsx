@@ -30,6 +30,9 @@ async function getOnRampTransactions() {
             userId: Number(session?.user?.id)
         }
     });
+
+    console.log("Wallet Trans : "+ JSON.stringify(txns));
+    
     return txns.map(t => ({
         time: t.startTime,
         amount: t.amount,
