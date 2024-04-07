@@ -14,6 +14,23 @@ const SUPPORTED_BANKS = [{
     redirectUrl: "https://www.axisbank.com/"
 }];
 
+
+export async function  creditMoneyIntoWallet(provider: string, amount: number, redirectUrl: string | undefined) {
+    if(amount < 1000) {
+        alert("Amount to credit into the wallet should be minimum 1000 Rs.")
+        return
+    }
+
+    const resp = await createOnRampTransaction(provider, amount)
+
+    if(resp.statusCode == 200) {
+        alert(resp.message)
+        window.location.href = redirectUrl || "";
+    }else {
+        alert(resp.message)
+    }
+}
+
 export const AddMoney = () => {
     const [redirectUrl, setRedirectUrl] = useState(SUPPORTED_BANKS[0]?.redirectUrl);
     const [provider, setProvider] = useState(SUPPORTED_BANKS[0]?.name || "");
@@ -35,13 +52,10 @@ export const AddMoney = () => {
         }))} />
         <div className="flex justify-center pt-4">
             <Button onClick={async () => {
-                const resp = await createOnRampTransaction(provider, value)
-                alert(resp.message)
-                window.location.href = redirectUrl || "";
-            }}>
-            Add Money
-            </Button>
+                await creditMoneyIntoWallet(provider, value, redirectUrl)
+            }}> Add Money </Button>
         </div>
     </div>
 </Card>
 }
+

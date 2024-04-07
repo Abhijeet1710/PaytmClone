@@ -4,11 +4,13 @@ import prismaDB, { TransactionStatuses } from "@repo/db/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth";
 
+
 export async function createOnRampTransaction(provider: string, amount: number) {
     // Ideally the token should come from the banking provider (hdfc/axis)
     const session = await getServerSession(authOptions);
     if (!session?.user || !session.user?.id) {
         return {
+            statusCode: 401,
             message: "Unauthenticated request"
         }
     }
@@ -25,6 +27,7 @@ export async function createOnRampTransaction(provider: string, amount: number) 
     });
 
     return {
+        statusCode: 200,
         message: "Transaction in Pending Status"
     }
 }
