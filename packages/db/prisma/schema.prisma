@@ -61,7 +61,7 @@ enum AuthType {
 }
 
 enum OnRampStatus {
-  Success
-  Failure
-  Processing
+  Successful
+  Failed
+  Pending
 }

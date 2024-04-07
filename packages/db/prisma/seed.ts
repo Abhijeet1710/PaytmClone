@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import bcrypt from "bcrypt";
+import { TransactionStatuses} from "../index"
 const prismaDB = new PrismaClient()
 
 async function main() {
@@ -20,7 +21,7 @@ async function main() {
       OnRampTransaction: {
         create: {
           startTime: new Date(),
-          status: "Success",
+          status: TransactionStatuses.SUCCESSFUL,
           amount: 20000,
           token: "token__1",
           provider: "HDFC Bank",
@@ -45,7 +46,7 @@ async function main() {
       OnRampTransaction: {
         create: {
           startTime: new Date(),
-          status: "Failure",
+          status: TransactionStatuses.FAILED,
           amount: 2000,
           token: "token__2",
           provider: "HDFC Bank",

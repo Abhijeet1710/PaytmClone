@@ -1,4 +1,5 @@
 import { Card } from "@repo/ui/card"
+import { TransactionStatuses } from "@repo/db/client"
 
 export const OnRampTransactions = ({
     transactions
@@ -18,12 +19,15 @@ export const OnRampTransactions = ({
             </div>
         </Card>
     }
+
+    console.log("All Trans"+ JSON.stringify(transactions));
+    
     return <Card title="Recent Transactions">
         <div className="pt-2">
             {transactions.map(t => <div className="flex justify-between">
                 <div>
                     <div className="text-sm">
-                        Received INR
+                        Status: {TransactionStatuses.PENDING}
                     </div>
                     <div className="text-slate-600 text-xs">
                         {t.time.toDateString()}

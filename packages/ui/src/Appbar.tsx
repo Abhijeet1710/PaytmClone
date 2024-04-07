@@ -18,7 +18,8 @@ export const Appbar = ({
         <div className="text-lg flex flex-col justify-center">
             PayTM
         </div>
-        <div className="flex flex-col justify-center pt-2">
+        <div className="flex justify-center pt-2">
+            {user && <p className="pt-2 mr-2.5 font-bold text-[#6a51a6]">{user.name}</p>}
             <Button onClick={user ? onSignout : onSignin}>{user ? "Logout" : "Login"}</Button>
         </div>
     </div>

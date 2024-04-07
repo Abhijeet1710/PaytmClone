@@ -1,6 +1,6 @@
 "use server";
 
-import prismaDB from "@repo/db/client";
+import prismaDB, { TransactionStatuses } from "@repo/db/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth";
 
@@ -16,7 +16,7 @@ export async function createOnRampTransaction(provider: string, amount: number) 
     await prismaDB.onRampTransaction.create({
         data: {
             provider,
-            status: "Processing",
+            status: TransactionStatuses.PENDING,
             startTime: new Date(),
             token: token,
             userId: Number(session?.user?.id),
