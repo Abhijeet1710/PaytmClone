@@ -61,7 +61,9 @@ D] DB Setup
 
 A] UI Inhancement
     - Responsivness
+    - Login/Auth Page UI change
     - Alerts on clicking any button (Messages from calls)
+    - Logged in user details should be visible on Home Page., phone no should be seen on nav bar. (left of logout button)
 
 B] Transfer : Recent Transactions
     - transaction status not showing (Should show status [Failed, Received, In-Progress])

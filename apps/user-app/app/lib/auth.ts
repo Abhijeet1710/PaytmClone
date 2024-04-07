@@ -7,6 +7,8 @@ export const authOptions = {
       CredentialsProvider({
           name: 'Credentials',
           credentials: {
+            name: {label: "Name", type: "text", placeholder: "User Name", required: true},
+            email: {label: "Enail", type: "email", placeholder: "User Email", required: true},
             phone: { label: "Phone number", type: "text", placeholder: "1231231231", required: true },
             password: { label: "Password", type: "password", required: true }
           },
@@ -35,6 +37,8 @@ export const authOptions = {
             try {
                 const user = await prismaDB.user.create({
                     data: {
+                        name: credentials.name,
+                        email: credentials.email,
                         number: credentials.phone,
                         password: hashedPassword
                     }
