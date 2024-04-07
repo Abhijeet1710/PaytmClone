@@ -1,8 +1,10 @@
 import express from "express";
-import db from "@repo/db/client";
+import prismaDB from "@repo/db/client";
 const app = express();
 
 app.use(express.json())
+
+const PORT = 3003
 
 app.post("/hdfcWebhook", async (req, res) => {
     //TODO: Add zod validation here?
@@ -18,8 +20,8 @@ app.post("/hdfcWebhook", async (req, res) => {
     };
 
     try {
-        await db.$transaction([
-            db.balance.updateMany({
+        await prismaDB.$transaction(async (tx) => {
+            const respBalUpdate = await tx.balance.updateMany({
                 where: {
                     userId: Number(paymentInformation.userId)
                 },
@@ -29,8 +31,11 @@ app.post("/hdfcWebhook", async (req, res) => {
                         increment: Number(paymentInformation.amount)
                     }
                 }
-            }),
-            db.onRampTransaction.updateMany({
+            });
+
+            console.log("Balance Update : " + JSON.stringify(respBalUpdate))
+            
+            const respOnRampUpdate = await tx.onRampTransaction.updateMany({
                 where: {
                     token: paymentInformation.token
                 }, 
@@ -38,7 +43,9 @@ app.post("/hdfcWebhook", async (req, res) => {
                     status: "Success",
                 }
             })
-        ]);
+
+            console.log("respOnRampUpdate Update : " + JSON.stringify(respOnRampUpdate))
+        })
 
         res.json({
             message: "Captured"
@@ -49,7 +56,6 @@ app.post("/hdfcWebhook", async (req, res) => {
             message: "Error while processing webhook"
         })
     }
-
 })
 
-app.listen(3003);
+app.listen(PORT, () => console.log("Server Up and Running on https://localhost:"+PORT));

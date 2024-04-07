@@ -1,5 +1,5 @@
 import GoogleProvider from "next-auth/providers/google";
-import db from "@repo/db/client";
+import prismaDB from "@repo/db/client";
 
 export const authOptions = {
     providers: [
@@ -23,7 +23,7 @@ export const authOptions = {
           return false;
         }
 
-        await db.merchant.upsert({
+        await prismaDB.merchant.upsert({
           select: {
             id: true
           },

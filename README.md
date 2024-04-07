@@ -55,3 +55,13 @@ D] DB Setup
     2. Migrate DB schema
     - npx prisma migrate dev --name init
     - npx prisma generate (Auto runs after first command)
+
+
+# TODO :
+
+A] UI Inhancement
+    - Responsivness
+    - Alerts on clicking any button (Messages from calls)
+
+B] Transfer : Recent Transactions
+    - transaction status not showing (Should show status [Failed, Received, In-Progress])

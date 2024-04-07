@@ -1,9 +1,9 @@
 import { PrismaClient } from '@prisma/client'
 import bcrypt from "bcrypt";
-const prisma = new PrismaClient()
+const prismaDB = new PrismaClient()
 
 async function main() {
-  const alice = await prisma.user.upsert({
+  const alice = await prismaDB.user.upsert({
     where: { number: '1111111111' },
     update: {},
     create: {
@@ -27,7 +27,7 @@ async function main() {
       },
     },
   })
-  const bob = await prisma.user.upsert({
+  const bob = await prismaDB.user.upsert({
     where: { number: '2222222222' },
     update: {},
     create: {
@@ -55,10 +55,10 @@ async function main() {
 }
 main()
   .then(async () => {
-    await prisma.$disconnect()
+    await prismaDB.$disconnect()
   })
   .catch(async (e) => {
     console.error(e)
-    await prisma.$disconnect()
+    await prismaDB.$disconnect()
     process.exit(1)
   })

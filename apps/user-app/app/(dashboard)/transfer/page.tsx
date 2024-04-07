@@ -1,4 +1,4 @@
-import prisma from "@repo/db/client";
+import prismaDB from "@repo/db/client";
 import { AddMoney } from "../../../components/AddMoneyCard";
 import { BalanceCard } from "../../../components/BalanceCard";
 import { OnRampTransactions } from "../../../components/OnRampTransactions";
@@ -7,7 +7,7 @@ import { authOptions } from "../../lib/auth";
 
 async function getBalance() {
     const session = await getServerSession(authOptions);
-    const balance = await prisma.balance.findFirst({
+    const balance = await prismaDB.balance.findFirst({
         where: {
             userId: Number(session?.user?.id)
         }
@@ -20,7 +20,7 @@ async function getBalance() {
 
 async function getOnRampTransactions() {
     const session = await getServerSession(authOptions);
-    const txns = await prisma.onRampTransaction.findMany({
+    const txns = await prismaDB.onRampTransaction.findMany({
         where: {
             userId: Number(session?.user?.id)
         }
