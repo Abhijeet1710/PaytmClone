@@ -55,6 +55,7 @@ D] DB Setup
     2. Migrate DB schema
     - npx prisma migrate dev --name init
     - npx prisma generate (Auto runs after first command)
+    - npx prisma studio (Postgres DB UI)
 
 
 # TODO :

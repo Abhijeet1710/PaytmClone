@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+.mainBg {
+    background-color: #F1EAFA;
+}
+
+:root {
+    --primaryBlue: #6a51a6
+}
 
 .widthVx {
     width: 100VX;
@@ -9,6 +16,20 @@
 
 .selectedNav {
     color: white;
-    background-color: blue;
+    
     border-radius: 20px;
 }
+
+.primaryBackgroundColor {
+    background-color: var(--primaryBlue);
+}
+
+.pC {
+    color: var(--primaryBlue)
+}
+
+.whiteCard {
+    background-color: #f7f2fc;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+

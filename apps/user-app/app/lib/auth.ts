@@ -55,10 +55,12 @@ export const authOptions = {
                 });
             
                 console.log("Balance Init : "+JSON.stringify(balance));
+                
                 return {
                     id: user.id.toString(),
                     name: user.name,
-                    email: user.number
+                    email: user.email,
+                    phone: user.number
                 }
             } catch(e) {
                 console.error(e);

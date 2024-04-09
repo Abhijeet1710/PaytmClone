@@ -4,9 +4,10 @@ export default function Layout({
   children,
 }: {
   children: React.ReactNode;
-}): JSX.Element {
+}): JSX.Element {  
+
   return (
-    <div className="flex flex-col md:flex-row">
+    <div className="flex flex-col md:flex-row mainBg">
       <div className="pt-4 md:w-80 md:border-r md:border-slate-300 md:min-h-screen md:mr-4 md:pt-28">
         <div className="flex flx-row md:flex-col widthVx overflow-x-scroll md:overflow-x-hidden md:px-4">
           <SidebarItem href={"/dashboard"} icon={<HomeIcon />} title="Home" />
