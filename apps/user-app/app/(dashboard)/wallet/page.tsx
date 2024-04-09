@@ -1,48 +1,16 @@
 import prismaDB from "@repo/db/client";
 import { AddMoney } from "../../../components/AddMoneyCard";
 import { BalanceCard } from "../../../components/BalanceCard";
-import { OnRampTransactions } from "../../../components/OnRampTransactions";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../lib/auth";
 import * as _ from "lodash"
-
-async function getBalance() {
-    const session = await getServerSession(authOptions);
-    if(_.isNil(session)) return { amount: 0, locked: 0 }
-
-    const balance = await prismaDB.balance.findFirst({
-        where: {
-            userId: Number(session?.user?.id)
-        }
-    });
-    return {
-        amount: balance?.amount || 0,
-        locked: balance?.locked || 0
-    }
-}
-
-async function getOnRampTransactions() {
-    const session = await getServerSession(authOptions);
-    if(_.isNil(session)) return []
-    
-    const txns = await prismaDB.onRampTransaction.findMany({
-        where: {
-            userId: Number(session?.user?.id)
-        }
-    });
-
-    console.log("Wallet Trans : "+ JSON.stringify(txns));
-    
-    return txns.map(t => ({
-        time: t.startTime,
-        amount: t.amount,
-        status: t.status,
-        provider: t.provider
-    }))
-}
+import { getBalance, getOnRampTransactions } from "../../lib/actions/utils";
+import { TransactionsCard } from "../../../components/TransactionsCard";
 
 export default async function() {
-    const balance = await getBalance();
+    const session = await getServerSession(authOptions);
+
+    const balance = await getBalance(session?.user?.id);
     const transactions = await getOnRampTransactions();
 
     return <div className="w-screen">
@@ -56,7 +24,7 @@ export default async function() {
             <div>
                 <BalanceCard amount={balance.amount} locked={balance.locked} />
                 <div className="pt-4">
-                    <OnRampTransactions transactions={transactions} />
+                    <TransactionsCard transactions={transactions} title="Wallet Transactions" />
                 </div>
             </div>
         </div>

@@ -92,7 +92,7 @@ export default async function() {
 
             <p><span> UserId : </span> <span className="text-xl pC">00{id}</span> </p>
 
-            <p><span> Phone No. : </span> <span className="text-xl pC">+91 {email}</span> </p>
+            <p><span> Phone No. : </span> <span className="text-xl pC">+91 - {email}</span> </p>
         </div>
         <div className="mt-4 md:mt-8">
             <p className="text-sm">Portfolio value.</p>

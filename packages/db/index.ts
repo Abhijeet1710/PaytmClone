@@ -19,3 +19,8 @@ export enum TransactionStatuses {
   SUCCESSFUL = "Successful",
   PENDING = "Pending"
 }
+
+export enum AmountFlow {
+  CREDITED = "Credited",
+  DEBITED = "Debited"
+}
